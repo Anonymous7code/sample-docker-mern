@@ -1,0 +1,65 @@
+.App {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.response {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: #f0f8ff;
+  border-radius: 8px;
+  border: 2px solid #007bff;
+}
+
+.response h2 {
+  color: #007bff;
+  margin-top: 0;
+}
+
+.message {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 1rem 0;
+}
+
+.timestamp {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.error {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #ffebee;
+  border: 2px solid #f44336;
+  border-radius: 8px;
+  color: #c62828;
+}

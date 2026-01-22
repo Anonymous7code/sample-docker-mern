@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ../
+      dockerfile: deployment/docker/server.Dockerfile
+    image: server:latest
+    container_name: server
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=production
+      - PORT=8000
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:8000/api.hello', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp
+    mem_limit: 512m
+    cpus: 0.5
+
+  # client:
+  #   build:
+  #     context: ../
+  #     dockerfile: deployment/docker/client.Dockerfile
+  #   image: client:latest
+  #   container_name: client
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     server:
+  #       condition: service_healthy
+  #   networks:
+  #     - app-network
+  #   healthcheck:
+  #     test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 40s
+  #   security_opt:
+  #     - no-new-privileges:true
+  #   read_only: true
+  #   tmpfs:
+  #     - /var/cache/nginx
+  #     - /var/run
+  #     - /tmp
+  #   mem_limit: 256m
+  #   cpus: 0.25
+
+networks:
+  app-network:
+    driver: bridge
